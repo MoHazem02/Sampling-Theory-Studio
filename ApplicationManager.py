@@ -165,12 +165,12 @@ class ApplicationManager:
         
     def plot_difference(self):
         if self.current_tab == "Load": 
-            difference = [y - x for y, x in zip(self.reconstructed_signal, self.current_loaded_signal.noisy_Y_Coordinates)]
+            difference = [y - x for y, x in zip(self.reconstructed_signal, self.current_loaded_signal.Y_Coordinates)]
             # Plot the difference on load_graph_3
             self.load_graph_3.clear()
             self.load_graph_3.plot(self.current_loaded_signal.X_Coordinates, difference, pen='g')
         else:
-            difference = [y - x for y, x in zip(self.reconstructed_signal, self.Composed_Signal.noisy_Y_Coordinates)]
+            difference = [y - x for y, x in zip(self.reconstructed_signal, self.Composed_Signal.Y_Coordinates)]
             # Plot the difference on compose_graph_3
             self.compose_graph_3.clear()
             self.compose_graph_3.plot(self.Composed_Signal.X_Coordinates, difference, pen='g')
