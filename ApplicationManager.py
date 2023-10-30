@@ -69,7 +69,7 @@ class ApplicationManager:
             self.load_graph_1.clear()
             self.load_graph_1.plot(X_Coordinates, Y_Coordinates, pen='b')
             self.update_sampling_slider()
-            
+            self.ui_window.Load_Sampling_Frequency_LCD.setProperty("intValue", 0)
     def get_sampling_frequency(self):
         if self.current_tab == "Load":
             self.current_loaded_signal.sampling_rate = self.ui_window.Load_Sampling_Frequency_Slider.value()
@@ -194,7 +194,6 @@ class ApplicationManager:
                 for component in self.COMPONENTS:
                     if component.frequency > max_component_freq:
                         max_component_freq = component.frequency
-                # self.Composed_Signal.max_freq = max_component_freq
                 self.ui_window.Compose_Sampling_Frequency_Slider.setMaximum(6 * int(max_component_freq))
                 self.ui_window.Compose_Sampling_Frequency_Slider.setTickInterval(int(6 * max_component_freq / 10))
             else:
@@ -266,6 +265,8 @@ class ApplicationManager:
 
             self.ui_window.Compose_Signal_Magnitude_Slider.setValue(selected_component.magnitude)
             self.ui_window.Compose_Signal_Frequency_Slider.setValue(selected_component.frequency)
+            self.ui_window.Compose_Sampling_Frequency_Slider.setValue(1)
+            self.ui_window.Compose_Sampling_Frequency_LCD.setProperty("intValue", 0)
 
     def update_magnitude(self):
         selected_index = self.ui_window.Compose_Components_ComboBox.currentIndex()
