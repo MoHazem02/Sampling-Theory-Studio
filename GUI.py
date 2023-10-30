@@ -236,7 +236,7 @@ class Ui_MainWindow(object):
         self.Load_Sampling_Frequency_LCD.setStyleSheet("border:none;")
         self.Load_Sampling_Frequency_LCD.setFrameShadow(QtWidgets.QFrame.Plain)
         self.Load_Sampling_Frequency_LCD.setLineWidth(1)
-        self.Load_Sampling_Frequency_LCD.setProperty("intValue", 1)
+        self.Load_Sampling_Frequency_LCD.setProperty("intValue", 0)
         self.Load_Sampling_Frequency_LCD.setObjectName("Load_Sampling_Frequency_LCD")
         
         self.horizontalLayout_4.addWidget(self.Load_Sampling_Frequency_LCD)
@@ -543,7 +543,7 @@ class Ui_MainWindow(object):
         self.Compose_Sampling_Frequency_LCD.setFont(font)
         self.Compose_Sampling_Frequency_LCD.setStyleSheet("border:none;")
         self.Compose_Sampling_Frequency_LCD.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.Compose_Sampling_Frequency_LCD.setProperty("intValue", 1)
+        self.Compose_Sampling_Frequency_LCD.setProperty("intValue", 0)
         self.Compose_Sampling_Frequency_LCD.setObjectName("Compose_Sampling_Frequency_LCD")
         self.horizontalLayout_12.addWidget(self.Compose_Sampling_Frequency_LCD)
         self.verticalLayout.addLayout(self.horizontalLayout_12)

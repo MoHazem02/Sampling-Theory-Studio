@@ -302,7 +302,7 @@ class ApplicationManager:
 
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['x', 'y', 'max_frequency'])
+            writer.writerow(['x', 'y', 'f'])
 
             for i in range(len(self.Composed_Signal.X_Coordinates)):
                 writer.writerow([self.Composed_Signal.X_Coordinates[i], self.Composed_Signal.Y_Coordinates[i], self.Composed_Signal.max_freq])
