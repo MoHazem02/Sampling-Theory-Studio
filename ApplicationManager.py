@@ -250,6 +250,7 @@ class ApplicationManager:
                     self.ui_window.Compose_Components_ComboBox.setItemText(index, f"Component {index+1}")
 
         self.update_signal()
+        self.update_sampling_slider()
 
     def update_sliders(self):
         if self.current_tab == "Load":
