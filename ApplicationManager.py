@@ -116,7 +116,7 @@ class ApplicationManager:
             self.reconstruct_signal()
             self.plot_difference()
         else:
-            freq = self.get_sampling_frequency()
+            freq = self.get_sampling_frequency() * 5
             if (freq is None) or (freq == 0):
                 return
             self.sampling_period = float(1 / freq)
@@ -282,7 +282,7 @@ class ApplicationManager:
 
     def update_signal(self):
 
-        signal_X = np.linspace(0, 10000, 100)
+        signal_X = np.linspace(0, 5000, 100)
         signal_Y = 0
         for component in self.COMPONENTS:
             signal_Y += component.magnitude * np.sin(2 * np.pi * component.frequency * signal_X)
