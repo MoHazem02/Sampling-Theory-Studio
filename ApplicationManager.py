@@ -282,7 +282,7 @@ class ApplicationManager:
 
     def update_signal(self):
 
-        signal_X = np.linspace(0, 1, 1000)
+        signal_X = np.linspace(0, 10000, 100)
         signal_Y = 0
         for component in self.COMPONENTS:
             signal_Y += component.magnitude * np.sin(2 * np.pi * component.frequency * signal_X)
