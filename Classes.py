@@ -6,6 +6,7 @@ class Signal:
         self.max_freq = 0
         self.sampling_rate = 0
         self.noise = 50
+        self.synthetic = False
 
 
 class Component:

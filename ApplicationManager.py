@@ -59,6 +59,7 @@ class ApplicationManager:
             
             if File_Path[-4:] == ".csv":
                 self.current_loaded_signal.max_freq = max_frequency[0]
+                self.current_loaded_signal.synthetic = True
             else:
                 self.current_loaded_signal.max_freq = max(np.abs(np.fft.rfft(self.current_loaded_signal.Y_Coordinates)))
             
@@ -92,6 +93,9 @@ class ApplicationManager:
     def plot_samples(self):
         if self.current_tab == "Load":
             freq = self.get_sampling_frequency()
+            # Synthetic Signals are loaded with 5 periods so the sampling points will be multiplied 5x over the whole domain
+            if self.current_loaded_signal.synthetic:
+                freq *= 5
             if (freq is None) or (freq == 0):
                 return
             self.sampling_period = float(1 / freq)
@@ -103,10 +107,11 @@ class ApplicationManager:
                self.samples_per_period = math.floor(self.samples_per_period)
 
             # Sample the signal at the given frequency
-            self.sampled_points = [self.current_loaded_signal.noisy_Y_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates), (self.samples_per_period))]
+            self.sampled_points = [self.current_loaded_signal.noisy_Y_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates),
+                                                                                                    self.samples_per_period)]
             self.sampled_points = np.array(self.sampled_points)
             # Generate x-coordinate points based on the length of sampled_points
-            self.sampled_Xpoints = [self.current_loaded_signal.X_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates), (self.samples_per_period))]
+            self.sampled_Xpoints = [self.current_loaded_signal.X_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates), self.samples_per_period)]
             self.sampled_Xpoints = np.array(self.sampled_Xpoints)  # Convert to a NumPy array
             self.load_graph_1.clear()
             # Plot the sampled points on load_graph_1
@@ -127,10 +132,10 @@ class ApplicationManager:
             else:
                self.samples_per_period = math.floor(self.samples_per_period)
             # Sample the signal at the given frequency
-            self.sampled_points = [self.Composed_Signal.noisy_Y_Coordinates[i] for i in range(0, len(self.Composed_Signal.noisy_Y_Coordinates), (self.samples_per_period))]
+            self.sampled_points = [self.Composed_Signal.noisy_Y_Coordinates[i] for i in range(0, len(self.Composed_Signal.noisy_Y_Coordinates), self.samples_per_period)]
             self.sampled_points = np.array(self.sampled_points)
             # Generate x-coordinate points based on the length of sampled_points
-            self.sampled_Xpoints = [self.Composed_Signal.X_Coordinates[i] for i in range(0, len(self.Composed_Signal.noisy_Y_Coordinates), (self.samples_per_period))]
+            self.sampled_Xpoints = [self.Composed_Signal.X_Coordinates[i] for i in range(0, len(self.Composed_Signal.noisy_Y_Coordinates), self.samples_per_period)]
             self.sampled_Xpoints = np.array(self.sampled_Xpoints)  # Convert to a NumPy array
             self.compose_graph_1.clear()
             # Plot the sampled points on load_graph_1
@@ -140,7 +145,8 @@ class ApplicationManager:
             self.reconstruct_signal()
             self.plot_difference()
         
-    def ShannonInterpolation(self, input_magnitude, input_time, original_time):
+    @staticmethod
+    def ShannonInterpolation(input_magnitude, input_time, original_time):
         if len(input_magnitude) != len(input_time):
             print('Input magnitude and time are not the same length')
             return
@@ -301,7 +307,7 @@ class ApplicationManager:
 
         self.counter+=1
         filename = f'Composed_Signal_{self.counter}.csv'
-
+        self.Composed_Signal.synthetic = True
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['x', 'y', 'f'])
