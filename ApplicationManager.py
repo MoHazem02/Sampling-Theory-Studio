@@ -51,17 +51,17 @@ class ApplicationManager:
 
             else:
                 Record = wfdb.rdrecord(File_Path[:-4])
-                Y_Coordinates = list(Record.p_signal[:1000, 0])
+                Y_Coordinates = list(Record.p_signal[:, 0])
                 X_Coordinates = list(np.arange(len(Y_Coordinates)))
 
             self.loaded_signals.append(Classes.Signal(X_Coordinates, Y_Coordinates))
             self.current_loaded_signal = self.loaded_signals[-1]
-            
+            # Reading the sampling Frequency from the .hea file
+            self.current_loaded_signal.max_freq = Record.fs
+
             if File_Path[-4:] == ".csv":
                 self.current_loaded_signal.max_freq = max_frequency[0]
                 self.current_loaded_signal.synthetic = True
-            else:
-                self.current_loaded_signal.max_freq = max(np.abs(np.fft.rfft(self.current_loaded_signal.Y_Coordinates)))
             
             if len(self.loaded_signals) > 1:
                 Temporary_String = f"Signal {len(self.loaded_signals)}"
@@ -108,8 +108,7 @@ class ApplicationManager:
                self.samples_per_period = math.floor(self.samples_per_period)
 
             # Sample the signal at the given frequency
-            self.sampled_points = [self.current_loaded_signal.noisy_Y_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates),
-                                                                                                    self.samples_per_period)]
+            self.sampled_points = [self.current_loaded_signal.noisy_Y_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates), self.samples_per_period)]
             self.sampled_points = np.array(self.sampled_points)
             # Generate x-coordinate points based on the length of sampled_points
             self.sampled_Xpoints = [self.current_loaded_signal.X_Coordinates[i] for i in range(0, len(self.current_loaded_signal.noisy_Y_Coordinates), self.samples_per_period)]
