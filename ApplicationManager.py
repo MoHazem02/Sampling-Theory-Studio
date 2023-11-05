@@ -57,7 +57,7 @@ class ApplicationManager:
             self.loaded_signals.append(Classes.Signal(X_Coordinates, Y_Coordinates))
             self.current_loaded_signal = self.loaded_signals[-1]
             # Reading the sampling Frequency from the .hea file
-            self.current_loaded_signal.max_freq = Record.fs
+            self.current_loaded_signal.max_freq = int(Record.fs/2)
 
             if File_Path[-4:] == ".csv":
                 self.current_loaded_signal.max_freq = max_frequency[0]
