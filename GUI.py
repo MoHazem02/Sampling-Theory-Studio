@@ -748,7 +748,7 @@ class Ui_MainWindow(object):
         self.label_7.setText(_translate("MainWindow", "Composed Signal"))
         self.label_8.setText(_translate("MainWindow", "Reconstructed Signal"))
         self.groupBox.setTitle(_translate("MainWindow", "Composed Signal Control"))
-        self.Compose_Button.setText(_translate("MainWindow", "  Compose Signal"))
+        self.Compose_Button.setText(_translate("MainWindow", "  Add Component"))
         self.Compose_Components_ComboBox.setItemText(0, _translate("MainWindow", "Component 1"))
         self.Compose_Remove_Component_Button.setText(_translate("MainWindow", "   Remove Component"))
         self.Compose_Save_Button.setText(_translate("MainWindow", "   Save Composed Signal"))

@@ -71,6 +71,7 @@ class ApplicationManager:
             self.load_graph_1.plot(X_Coordinates, Y_Coordinates, pen='b')
             self.update_sampling_slider()
             self.ui_window.Load_Sampling_Frequency_LCD.setProperty("intValue", 0)
+    
     def get_sampling_frequency(self):
         if self.current_tab == "Load":
             self.current_loaded_signal.sampling_rate = self.ui_window.Load_Sampling_Frequency_Slider.value()
@@ -188,10 +189,12 @@ class ApplicationManager:
                 self.ui_window.Load_Sampling_Frequency_Slider.setMinimum(1)
                 self.ui_window.Load_Sampling_Frequency_Slider.setMaximum(6 * int(self.current_loaded_signal.max_freq))
                 self.ui_window.Load_Sampling_Frequency_Slider.setTickInterval(int(6 * self.current_loaded_signal.max_freq / 10))
+                self.ui_window.Load_Sampling_Frequency_Slider.setValue(self.ui_window.Load_Sampling_Frequency_Slider.value() * int(self.current_loaded_signal.max_freq))
             else:
                 self.ui_window.Load_Sampling_Frequency_Slider.setMinimum(1)
                 self.ui_window.Load_Sampling_Frequency_Slider.setMaximum(6)
                 self.ui_window.Load_Sampling_Frequency_Slider.setTickInterval(1)
+                
         else:
 
             if self.ui_window.Compose_Hertz_RadioButton.isChecked():
@@ -202,10 +205,12 @@ class ApplicationManager:
                         max_component_freq = component.frequency
                 self.ui_window.Compose_Sampling_Frequency_Slider.setMaximum(6 * int(max_component_freq))
                 self.ui_window.Compose_Sampling_Frequency_Slider.setTickInterval(int(6 * max_component_freq / 10))
+                self.ui_window.Compose_Sampling_Frequency_Slider.setValue(self.ui_window.Compose_Sampling_Frequency_Slider.value() * int(max_component_freq))
             else:
                 self.ui_window.Compose_Sampling_Frequency_Slider.setMinimum(1)
                 self.ui_window.Compose_Sampling_Frequency_Slider.setMaximum(6)
                 self.ui_window.Compose_Sampling_Frequency_Slider.setTickInterval(1)
+                
 
     def add_noise(self, SNR_value, compose=False):
         if compose:
@@ -235,6 +240,10 @@ class ApplicationManager:
 
         Temporary_String = f"Component {self.component_count}"
         self.ui_window.Compose_Components_ComboBox.addItem(Temporary_String)
+        
+        self.ui_window.Compose_Components_ComboBox.setCurrentIndex(self.component_count-1)
+        self.ui_window.Compose_Signal_Magnitude_Slider.setValue(0)
+        self.ui_window.Compose_Signal_Frequency_Slider.setValue(0)
 
         new_component = Classes.Component()
         self.COMPONENTS.append(new_component)
@@ -271,7 +280,6 @@ class ApplicationManager:
 
             self.ui_window.Compose_Signal_Magnitude_Slider.setValue(selected_component.magnitude)
             self.ui_window.Compose_Signal_Frequency_Slider.setValue(selected_component.frequency)
-            self.ui_window.Compose_Sampling_Frequency_Slider.setValue(1)
             self.ui_window.Compose_Sampling_Frequency_LCD.setProperty("intValue", 0)
 
     def update_magnitude(self):
