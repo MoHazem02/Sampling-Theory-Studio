@@ -48,20 +48,19 @@ class ApplicationManager:
                 X_Coordinates = Signal["x"]
                 Y_Coordinates = Signal["y"]
                 max_frequency = Signal["f"]
+                self.loaded_signals.append(Classes.Signal(X_Coordinates, Y_Coordinates))
+                self.current_loaded_signal = self.loaded_signals[-1]
+                self.current_loaded_signal.max_freq = max_frequency[0]
+                self.current_loaded_signal.synthetic = True
 
             else:
                 Record = wfdb.rdrecord(File_Path[:-4])
                 Y_Coordinates = list(Record.p_signal[:, 0])
                 X_Coordinates = list(np.arange(len(Y_Coordinates)))
+                self.loaded_signals.append(Classes.Signal(X_Coordinates, Y_Coordinates))
+                self.current_loaded_signal = self.loaded_signals[-1]
                 # Reading the sampling Frequency from the .hea file
-                self.current_loaded_signal.max_freq = int(Record.fs / 2)
-
-            self.loaded_signals.append(Classes.Signal(X_Coordinates, Y_Coordinates))
-            self.current_loaded_signal = self.loaded_signals[-1]
-
-            if File_Path[-4:] == ".csv":
-                self.current_loaded_signal.max_freq = max_frequency[0]
-                self.current_loaded_signal.synthetic = True
+                self.current_loaded_signal.max_freq = Record.fs
             
             if len(self.loaded_signals) > 1:
                 Temporary_String = f"Signal {len(self.loaded_signals)}"
@@ -95,8 +94,6 @@ class ApplicationManager:
         if self.current_tab == "Load":
             freq = self.get_sampling_frequency()
             # Synthetic Signals are loaded with 5 periods so the sampling points will be multiplied 5x over the whole domain
-            if self.current_loaded_signal.synthetic:
-                freq *= 5
             if (freq is None) or (freq == 0):
                 return
             self.sampling_period = float(1 / freq)
