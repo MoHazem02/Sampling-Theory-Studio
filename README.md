@@ -43,7 +43,7 @@ pip install pyqt5 wfdb pandas numpy
 3. Launch the Sampling Theory Studio application:
 
 ```shell
-python Application.py
+python GUI.py
 ```
 ## Usage
 1. Use the "Sample & Recover" feature to select an analog signal and specify the sampling rate. Observe the recovered signal and compare it with the original signal.
