@@ -2,6 +2,10 @@
 
 Sampling Theory Studio is a desktop application that showcases the principles of signal sampling and recovery, emphasizing the importance and validation of the Nyquist rate. Sampling an analog signal is a crucial step in digital signal processing systems, and the Nyquist-Shannon sampling theorem guarantees the accurate recovery of the original signal when sampled with a frequency greater than or equal to its bandwidth (or double the maximum frequency for real signals).
 
+![image](https://github.com/MoHazem02/Sampling-Theory-Studio/assets/66066832/2c2b9a46-5f0b-4ff1-8a54-83997149561f)
+
+![image](https://github.com/MoHazem02/Sampling-Theory-Studio/assets/66066832/645d715a-0a96-45c3-a480-b62dfbae4679)
+
 ## Description
 
 The Sampling Theory Studio project aims to provide a visual and interactive tool to understand and explore the concepts of signal sampling and recovery. The desktop application offers the following features:
